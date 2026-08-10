@@ -1,0 +1,42 @@
+name: Draw keymaps
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'config/**.keymap'
+      - 'config/**.dtsi'
+      - 'config/**.json'
+      - 'draw/config.yaml'
+      - 'scripts/draw-keymap.sh'
+      - '.github/workflows/draw.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  draw:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Clone zmk-helpers (for preprocessor includes)
+        run: git clone --depth 1 https://github.com/urob/zmk-helpers.git
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: Install keymap-drawer
+        run: pip install keymap-drawer==0.23.0
+
+      - name: Render all keymaps
+        run: |
+          chmod +x scripts/draw-keymap.sh
+          scripts/draw-keymap.sh toucan
+          scripts/draw-keymap.sh toucan36
+
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "ci: update keymap SVGs [skip ci]"
+          file_pattern: 'draw/*.svg'

@@ -12,6 +12,20 @@ This repo also carries a parallel **Toucan36** variant (`toucan36_left` / `touca
 - **Swipe shortcuts**: the `swipe_button_mapper` node in [boards/shields/toucan/toucan.dtsi](boards/shields/toucan/toucan.dtsi)
 - **Invert scroll / trackpad settings**: the `tps43_trackpad` node in [boards/shields/toucan/toucan_right.overlay](boards/shields/toucan/toucan_right.overlay)
 
+# Local development
+
+Firmware normally builds via GitHub Actions (`.github/workflows/build.yml`), but a local build/draw environment is also available via Nix + [`just`](https://github.com/casey/just):
+
+```
+nix develop        # or `direnv allow` if you use direnv
+just init           # one-time: west init + update
+just build all       # build every target in build.yaml
+just build toucan36  # build targets matching a name
+just draw            # render draw/toucan.svg and draw/toucan36.svg from the keymaps
+```
+
+The `draw` workflow ([.github/workflows/draw.yml](.github/workflows/draw.yml)) also runs on every push to `main` that touches a keymap, `.dtsi`, or layout `.json`, and commits the regenerated SVGs back under [draw/](draw/).
+
 # License
 
 The code in this repo is available under the MIT license.
