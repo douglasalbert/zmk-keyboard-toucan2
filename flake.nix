@@ -3,7 +3,16 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     # This pins requirements.txt provided by zephyr-nix.pythonEnv.
-    zephyr.url = "github:zmkfirmware/zephyr/v4.1.0+zmk-fixes";
+    #
+    # Must match the Zephyr revision that ZMK's own manifest pins for the
+    # `zmk` revision in config/west.yml (currently v0.3, which imports
+    # zephyr v3.5.0+zmk-fixes via zmk/app/west.yml) — not whatever ZMK
+    # `main` currently tracks. A mismatch here doesn't break evaluation,
+    # but it does build a pythonEnv (west, python-devicetree/edtlib, etc.)
+    # against the wrong Zephyr API surface, which shows up as CMake errors
+    # like "Invalid SHIELD" during `west build` even though the actual
+    # west-managed ./zephyr checkout is the correct v3.5.0 one.
+    zephyr.url = "github:zmkfirmware/zephyr/v3.5.0+zmk-fixes";
     zephyr.flake = false;
 
     # Zephyr sdk and toolchain.
