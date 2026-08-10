@@ -1,0 +1,16 @@
+parse_config:
+  preprocess: true
+  zmk_additional_includes:
+    - zmk-helpers/include
+
+draw_config:
+  key_w: 54
+  key_h: 54
+  split_gap: 30
+  combo_w: 28
+  combo_h: 26
+  key_rx: 6
+  key_ry: 6
+  n_colors: 4
+  svg_extra_style: |
+    svg { font-family: SFMono-Regular, ui-monospace, monospace; font-size: 12px; }

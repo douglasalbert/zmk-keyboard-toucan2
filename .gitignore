@@ -1,0 +1,15 @@
+/.build
+/.direnv
+/.west
+/firmware
+/modules
+/zephyr
+/zmk
+/zmk-rgbled-widget
+/zmk_driver_azoteq
+/zmk-input-zoom
+/zmk-helpers
+/zmk-auto-layer
+/zmk-adaptive-key
+/draw/*.yaml
+!/draw/config.yaml
